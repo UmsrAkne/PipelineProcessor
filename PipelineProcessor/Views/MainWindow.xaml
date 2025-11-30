@@ -12,7 +12,106 @@
     d:DataContext="{d:DesignInstance viewModels:MainWindowViewModel}"
     prism:ViewModelLocator.AutoWireViewModel="True"
     mc:Ignorable="d">
-    <Grid>
-        <ContentControl prism:RegionManager.RegionName="ContentRegion" />
+
+    <Window.Resources>
+        <Style x:Key="ListBoxCustomStyle" TargetType="ListBox">
+            <Setter Property="Margin" Value="2" />
+            <Setter Property="ItemContainerStyle">
+                <Setter.Value>
+                    <Style TargetType="ListBoxItem">
+                        <Setter Property="Padding" Value="4" />
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+
+                        <!-- ControlTemplate 本体 -->
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="ListBoxItem">
+                                    <Border
+                                        x:Name="Border"
+                                        Padding="{TemplateBinding Padding}"
+                                        Background="{TemplateBinding Background}"
+                                        BorderBrush="{TemplateBinding BorderBrush}"
+                                        BorderThickness="1"
+                                        CornerRadius="3">
+                                        <ContentPresenter />
+                                    </Border>
+
+                                    <!-- 状態変化トリガー -->
+                                    <ControlTemplate.Triggers>
+
+                                        <!-- マウスオーバー -->
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter TargetName="Border" Property="Background" Value="#FFE5F1FF" />
+                                            <!-- 薄い青 -->
+                                        </Trigger>
+
+                                        <!-- 選択時 -->
+                                        <Trigger Property="IsSelected" Value="True">
+                                            <Setter TargetName="Border" Property="Background" Value="#FFCCE4FF" />
+                                            <!-- 濃いめ青 -->
+                                            <Setter Property="Foreground" Value="Black" />
+                                        </Trigger>
+
+                                        <!-- 非アクティブ（フォーカスなし選択） -->
+                                        <MultiTrigger>
+                                            <MultiTrigger.Conditions>
+                                                <Condition Property="IsSelected" Value="True" />
+                                                <Condition Property="Selector.IsSelectionActive" Value="False" />
+                                            </MultiTrigger.Conditions>
+                                            <Setter TargetName="Border" Property="Background" Value="#FFC7C7C7" />
+                                            <!-- グレー -->
+                                        </MultiTrigger>
+
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+
+                        <!-- デフォルト背景（未選択） -->
+                        <Setter Property="Background" Value="Transparent" />
+                    </Style>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <Grid Margin="2">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Border
+            Grid.Row="0"
+            Grid.Column="0"
+            Grid.ColumnSpan="2"
+            Padding="2">
+            <StackPanel Orientation="Horizontal">
+                <Button Content="実行" />
+            </StackPanel>
+        </Border>
+
+        <ListBox
+            Grid.Row="1"
+            Grid.Column="0"
+            Style="{StaticResource ListBoxCustomStyle}" />
+
+        <ListBox
+            Grid.Row="2"
+            Grid.Column="0"
+            Style="{StaticResource ListBoxCustomStyle}" />
+
+        <Border
+            Grid.Row="1"
+            Grid.RowSpan="2"
+            Grid.Column="1"
+            Padding="2">
+            <TextBlock />
+        </Border>
     </Grid>
 </Window>
