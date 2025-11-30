@@ -9,6 +9,8 @@ namespace PipelineProcessor.ViewModels;
 public class MainWindowViewModel : BindableBase
 {
     private string title = new AppVersionInfo().Title;
+    private TextFile selectedItem;
+    private string textFileDetail;
 
     public MainWindowViewModel()
     {
@@ -18,6 +20,18 @@ public class MainWindowViewModel : BindableBase
     public ObservableCollection<TextFile> TextFiles { get; set; } = new ();
 
     public ObservableCollection<ProcessorUnit> ProcessorUnits { get; set; } = new ();
+
+    public TextFile SelectedItem
+    {
+        get => selectedItem;
+        set
+        {
+            SetProperty(ref selectedItem, value);
+            TextFileDetail = selectedItem?.Value;
+        }
+    }
+
+    public string TextFileDetail { get => textFileDetail; set => SetProperty(ref textFileDetail, value); }
 
     public string Title
     {

@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:models="clr-namespace:PipelineProcessor.Models"
     xmlns:prism="http://prismlibrary.com/"
     xmlns:viewModels="clr-namespace:PipelineProcessor.ViewModels"
     Title="{Binding Title}"
@@ -100,20 +101,37 @@
             Grid.Row="1"
             Grid.Column="0"
             ItemsSource="{Binding ProcessorUnits}"
-            Style="{StaticResource ListBoxCustomStyle}" />
+            Style="{StaticResource ListBoxCustomStyle}">
+            <ListBox.ItemTemplate>
+                <DataTemplate DataType="{x:Type models:ProcessorUnit}">
+                    <Border>
+                        <TextBlock Text="{Binding ProcessType}" />
+                    </Border>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
 
         <ListBox
             Grid.Row="2"
             Grid.Column="0"
             ItemsSource="{Binding TextFiles}"
-            Style="{StaticResource ListBoxCustomStyle}" />
+            SelectedItem="{Binding SelectedItem}"
+            Style="{StaticResource ListBoxCustomStyle}">
+            <ListBox.ItemTemplate>
+                <DataTemplate DataType="{x:Type models:TextFile}">
+                    <Border>
+                        <TextBlock Text="{Binding FileInfo.Name}" />
+                    </Border>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
 
         <Border
             Grid.Row="1"
             Grid.RowSpan="2"
             Grid.Column="1"
             Padding="2">
-            <TextBlock />
+            <TextBlock Text="{Binding TextFileDetail}" />
         </Border>
     </Grid>
 </Window>
