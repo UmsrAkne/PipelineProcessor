@@ -1,4 +1,6 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using Prism.Mvvm;
 
 namespace PipelineProcessor.Models
@@ -21,5 +23,15 @@ namespace PipelineProcessor.Models
         public FileInfo FileInfo { get; set; }
 
         public string Value { get; set; }
+
+        public List<string> WorkingTexts { get; set; } = new ();
+
+        public string LatestWorkingText => WorkingTexts.LastOrDefault() ?? Value;
+
+        public void AddWorkingText(string text)
+        {
+            WorkingTexts.Add(text);
+            RaisePropertyChanged(nameof(LatestWorkingText));
+        }
     }
 }

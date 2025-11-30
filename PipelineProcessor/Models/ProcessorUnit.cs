@@ -30,7 +30,7 @@ namespace PipelineProcessor.Models
                 return input;
             }
 
-            return input;
+            return input + " Replacement";
         }
     }
 }
