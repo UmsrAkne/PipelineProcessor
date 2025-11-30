@@ -99,11 +99,13 @@
         <ListBox
             Grid.Row="1"
             Grid.Column="0"
+            ItemsSource="{Binding ProcessorUnits}"
             Style="{StaticResource ListBoxCustomStyle}" />
 
         <ListBox
             Grid.Row="2"
             Grid.Column="0"
+            ItemsSource="{Binding TextFiles}"
             Style="{StaticResource ListBoxCustomStyle}" />
 
         <Border
